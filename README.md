@@ -6,6 +6,8 @@ This is a work in progress.
 
 This is an example program, utilising the StdInReader, BaseComplementer, and the Printer component, to do base complement processing of fasta file content that it piped to the program.
 
+#### Using New... convenience functions
+
 ````go
 package main
 
@@ -37,6 +39,8 @@ func main() {
 	fmt.Println("Processed ", cnt, " lines.")
 }
 ````
+
+#### Connecting channels and components manually
 
 The above code is using convenient functions ("New...") for creating the components.
 What is really happening under the hood, is the following, which is the same workflow
