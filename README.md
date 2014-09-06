@@ -20,18 +20,18 @@ const (
 
 func main() {
 	// Create channels / connections
-	stdIn_BaseCompl := make(chan []byte, BUFSIZE)
-	baseCompl_Printer := make(chan []byte, BUFSIZE)
-	drivingBelt := make(chan int, 0)
+	chan1 := make(chan []byte, BUFSIZE)
+	chan2 := make(chan []byte, BUFSIZE)
+	chan3 := make(chan int, 0)
 
 	// Create components, connecting the channels
-	glow.NewStdInReader(stdIn_BaseCompl)
-	glow.NewBaseComplementer(stdIn_BaseCompl, baseCompl_Printer)
-	glow.NewPrinter(baseCompl_Printer, drivingBelt)
+	glow.NewStdInReader(chan1)
+	glow.NewBaseComplementer(chan1, chan2)
+	glow.NewPrinter(chan2, chan3)
 
 	// Loop over the last channel, to drive the execution
 	cnt := 0
-	for i := range drivingBelt {
+	for i := range chan3 {
 		cnt += i
 	}
 	fmt.Println("Processed ", cnt, " lines.")
