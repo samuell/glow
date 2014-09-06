@@ -9,6 +9,14 @@ var baseConv = [256]byte{
 	'\n': '\n',
 }
 
+func NewBaseComplementer(InChan chan []byte, OutChan chan []byte) *BaseComplementer {
+	baseComplementer := new(BaseComplementer)
+	baseComplementer.In = InChan
+	baseComplementer.Out = OutChan
+	baseComplementer.Init()
+	return baseComplementer
+}
+
 type BaseComplementer struct {
 	In  chan []byte
 	Out chan []byte

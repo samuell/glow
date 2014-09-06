@@ -5,6 +5,13 @@ import (
 	"os"
 )
 
+func NewStdInReader(outChan chan []byte) *StdInReader {
+	stdInReader := new(StdInReader)
+	stdInReader.Out = outChan
+	stdInReader.Init()
+	return stdInReader
+}
+
 type StdInReader struct {
 	Out chan []byte
 }
