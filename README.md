@@ -1,4 +1,4 @@
-## Slow - Simplistic library of (streaming) workflow compoenets for scientific and bioinformatics workflows
+## Glow - Simplistic library of (streaming) Go(lang) workflow compoenets for scientific and bioinformatics workflows
 
 This is a work in progress.
 
