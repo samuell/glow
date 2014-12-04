@@ -10,7 +10,7 @@ This is an example program, utilising the StdInReader, BaseComplementer, and the
 
 First let's just have a look at how a component looks. Every component has one or more "in" and "outports", consisting of struct-fields of type channel (of some type that you choose. []byte arrays in this case). Then it has a run method that initializes a go-routine, and reads on the inports, and writes on the outports, as it processes incoming "data packets":
 
-````
+````go
 package glow
 
 import (
