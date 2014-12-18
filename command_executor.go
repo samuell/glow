@@ -23,13 +23,15 @@ type CommandExecutor struct {
 
 func (self *CommandExecutor) Init() {
 	go func() {
-		// Set up the command to run
-		cmdParts := strings.Fields(<-self.CommandIn)
-		cmdHead := cmdParts[0]
-		cmdTail := cmdParts[1:len(cmdParts)]
-		cmd := exec.Command(cmdHead, cmdTail...)
+		// Read command from in-port
+		commandParts := strings.Fields(<-self.CommandIn)
+		executable := commandParts[0]
+		arguments := commandParts[1:len(commandParts)]
+		// Create command object
+		cmd := exec.Command(executable, arguments...)
 
-		// Connect a buffer to the stdout of the command
+		// Connect a buffer to the stdout of the command, and 
+		// usd in scanner
 		var out bytes.Buffer
 		cmd.Stdout = &out
 		scan := bufio.NewScanner(&out)
@@ -40,7 +42,7 @@ func (self *CommandExecutor) Init() {
 			log.Fatal(err)
 		}
 
-		// Write the command output to the output channel LinesOut
+		// (Copy and) write the command output to the out-port
 		for scan.Scan() {
 			self.LinesOut <- append([]byte(nil), scan.Bytes()...)
 		}
