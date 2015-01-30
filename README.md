@@ -8,7 +8,12 @@ This is an example program, utilising the StdInReader, BaseComplementer, and the
 
 ### Example component, STDIN reader
 
-First let's just have a look at how a component looks. Every component has one or more "in" and "outports", consisting of struct-fields of type channel (of some type that you choose. []byte arrays in this case). Then it has a run method that initializes a go-routine, and reads on the inports, and writes on the outports, as it processes incoming "data packets":
+First let's just have a look at how a component looks. Every component has one or more "in" and "outports",
+consisting of struct-fields of type channel (of some type that you choose. []byte arrays in this case). 
+Then it has a run method that initializes a go-routine, and reads on the inports, and writes on the outports,
+as it processes incoming "data packets". Finally, as you can see in the OutChan() method, it provides a 
+convenience method for each outgoing chan field, that initializes the channel and returns it, which can later
+be used for easier wiring of the network:
 
 ````go
 package glow
@@ -18,15 +23,13 @@ import (
 	"os"
 )
 
-func NewStdInReader(outChan chan []byte) *StdInReader {
-	stdInReader := new(StdInReader)
-	stdInReader.Out = outChan
-	stdInReader.Init()
-	return stdInReader
-}
-
 type StdInReader struct {
 	Out chan []byte
+}
+
+func (self *StdInReader) OutChan() chan []byte {
+	self.Out = make(chan []byte, 16)
+	return self.Out
 }
 
 func (self *StdInReader) Init() {
@@ -53,7 +56,7 @@ import (
 )
 
 const (
-	BUFSIZE = 2048 // Set a buffer size to use for channels
+	BUFSIZE = 128 // Set a buffer size to use for channels
 )
 
 func main() {
@@ -86,9 +89,10 @@ func main() {
 }
 ````
 
-#### Using New... convenience functions
+#### Using OutChan() convenience methods
 
-... we can save a lot of keystrokes, and make the code shorter, and maybe more readable:
+... we can save some keystrokes by using the functions defined for each outport,
+which initializes the outport with a channel, and returns the channel.
 
 ````go
 package main
@@ -98,24 +102,28 @@ import (
 	"github.com/samuell/glow"
 )
 
-const (
-	BUFSIZE = 2048 // Set a buffer size to use for channels
-)
-
 func main() {
 	// Create channels / connections
-	chan1 := make(chan []byte, BUFSIZE)
-	chan2 := make(chan []byte, BUFSIZE)
-	chan3 := make(chan int, 0)
+	fileReader := new(glow.FileReader)
+	baseComplementer := new(glow.BaseComplementer)
+	printer := new(glow.Printer)
 
-	// Create components, connecting the channels
-	glow.NewStdInReader(chan1)             // Here, chan1 is an output channel
-	glow.NewBaseComplementer(chan1, chan2) // chan1 is input, chan2 is output
-	glow.NewPrinter(chan2, chan3)          // chan2 is input, chan3 is output
+	// Connect components (THIS IS WHERE THE NETWORK IS DEFINED!)
+	baseComplementer.In = fileReader.OutChan()
+	printer.In = baseComplementer.OutChan()
+
+	// Initialize / set up go-routines
+	fileReader.Init()
+	baseComplementer.Init()
+	printer.Init()
+
+	// The InFilePath channel has to be created manually
+	fileReader.InFilePath = make(chan string)
+	fileReader.InFilePath <- "test.fa"
 
 	// Loop over the last channel, to drive the execution
 	cnt := 0
-	for i := range chan3 {
+	for i := range printer.DrivingBeltChan() {
 		cnt += i
 	}
 	fmt.Println("Processed ", cnt, " lines.")
