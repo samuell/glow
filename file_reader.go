@@ -6,17 +6,14 @@ import (
 	"os"
 )
 
-func NewFileReader(inFilePathChan chan string, outChan chan []byte) *FileReader {
-	fileReader := new(FileReader)
-	fileReader.InFilePath = inFilePathChan
-	fileReader.Out = outChan
-	fileReader.Init()
-	return fileReader
-}
-
 type FileReader struct {
 	InFilePath chan string
 	Out        chan []byte
+}
+
+func (self *FileReader) OutChan() chan []byte {
+	self.Out = make(chan []byte, 16)
+	return self.Out
 }
 
 func (self *FileReader) Init() {

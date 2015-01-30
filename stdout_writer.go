@@ -6,13 +6,6 @@ import (
 	"os"
 )
 
-func NewStdOutWriter(InChan chan []byte) *StdOutWriter {
-	stdOutWriter := new(StdOutWriter)
-	stdOutWriter.In = InChan
-	stdOutWriter.Init()
-	return stdOutWriter
-}
-
 type StdOutWriter struct {
 	In chan []byte
 }

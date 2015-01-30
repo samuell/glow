@@ -8,17 +8,14 @@ import (
 	"strings"
 )
 
-func NewCommandExecutor(CommandIn chan string, LinesOut chan []byte) *CommandExecutor {
-	commandExecutor := new(CommandExecutor)
-	commandExecutor.CommandIn = CommandIn
-	commandExecutor.LinesOut = LinesOut
-	commandExecutor.Init()
-	return commandExecutor
-}
-
 type CommandExecutor struct {
 	CommandIn chan string
 	LinesOut  chan []byte
+}
+
+func (self *CommandExecutor) LinesOutChan() chan []byte {
+	self.LinesOut = make(chan []byte, 16)
+	return self.LinesOut
 }
 
 func (self *CommandExecutor) Init() {
@@ -30,7 +27,7 @@ func (self *CommandExecutor) Init() {
 		// Create command object
 		cmd := exec.Command(executable, arguments...)
 
-		// Connect a buffer to the stdout of the command, and 
+		// Connect a buffer to the stdout of the command, and
 		// usd in scanner
 		var out bytes.Buffer
 		cmd.Stdout = &out

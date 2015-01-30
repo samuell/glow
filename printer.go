@@ -6,17 +6,14 @@ import (
 	"os"
 )
 
-func NewPrinter(InChan chan []byte, DrivingBeltChan chan int) *Printer {
-	printer := new(Printer)
-	printer.In = InChan
-	printer.DrivingBelt = DrivingBeltChan
-	printer.Init()
-	return printer
-}
-
 type Printer struct {
 	In          chan []byte
 	DrivingBelt chan int
+}
+
+func (self *Printer) DrivingBeltChan() chan int {
+	self.DrivingBelt = make(chan int)
+	return self.DrivingBelt
 }
 
 func (self *Printer) Init() {
