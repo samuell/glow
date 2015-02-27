@@ -19,14 +19,19 @@ func (self *FileReader) OutChan() chan []byte {
 func (self *FileReader) Init() {
 	go func() {
 		file, err := os.Open(<-self.InFilePath)
-		defer file.Close()
 		if err != nil {
 			log.Fatal(err)
 		}
+		defer file.Close()
+
 		scan := bufio.NewScanner(file)
 		for scan.Scan() {
 			self.Out <- append([]byte(nil), scan.Bytes()...)
 		}
+		if scan.Err() != nil {
+			log.Fatal(scan.Err())
+		}
+
 		close(self.Out)
 	}()
 }
