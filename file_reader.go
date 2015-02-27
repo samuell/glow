@@ -19,6 +19,7 @@ func (self *FileReader) OutChan() chan []byte {
 func (self *FileReader) Init() {
 	go func() {
 		file, err := os.Open(<-self.InFilePath)
+		defer file.Close()
 		if err != nil {
 			log.Fatal(err)
 		}
