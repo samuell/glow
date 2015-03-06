@@ -2,7 +2,7 @@
 
 This is a work in progress, exploring how far we can get in writing in a "flow-based programming" style, completely without any frameworks,just using pure Go channels and go-routines, and just using a design pattern.
 
-For an in depth explanation of the ideas behind the library, see [this post on GopherAcademy.org](blog.gopheracademy.com/composable-pipelines-pattern).
+For an in depth explanation of the ideas behind the library, see [this post on GopherAcademy.org](http://blog.gopheracademy.com/composable-pipelines-pattern).
 
 ### Example usage
 
