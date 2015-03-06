@@ -2,6 +2,8 @@
 
 This is a work in progress, exploring how far we can get in writing in a "flow-based programming" style, completely without any frameworks,just using pure Go channels and go-routines, and just using a design pattern.
 
+For an in depth explanation of the ideas behind the library, see [this post on GopherAcademy.org](blog.gopheracademy.com/composable-pipelines-pattern).
+
 ### Example usage
 
 This is an example program, utilising the StdInReader, BaseComplementer, and the Printer component, to do base complement processing of fasta file content that it piped to the program.
