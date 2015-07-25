@@ -1,4 +1,4 @@
-# LIBRARY DEPRECATED - Replaced by: [scipipe.org](http://scipipe.org)
+# LIBRARY DEPRECATED - Replaced by [SciPipe](http://scipipe.org)
 
 ## Glow - Simplistic library of (streaming) Go(lang) workflow components for scientific and bioinformatics workflows
 
