@@ -1,3 +1,5 @@
+# DEPRECATED!!! Instead See: [scipipe.org](http://scipipe.org)
+
 ## Glow - Simplistic library of (streaming) Go(lang) workflow components for scientific and bioinformatics workflows
 
 This is a work in progress, exploring how far we can get in writing in a "flow-based programming" style, completely without any frameworks,just using pure Go channels and go-routines, and just using a design pattern.
