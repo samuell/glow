@@ -140,5 +140,6 @@ cat SomeFastaFile.fa | ./basecomplement > SomeFastaFile_Basecomplemented.fa
 
 
 ### Related projects / See also
-- Blow - https://github.com/samuell/blow
-- BioGo - https://code.google.com/p/biogo
+- [GoFlow](https://github.com/trustmaster/goflow)
+- [Blow](https://github.com/samuell/blow)
+- [BioGo](https://code.google.com/p/biogo)
