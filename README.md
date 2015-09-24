@@ -1,10 +1,6 @@
-# DEPRECATED - See [SciPipe](http://scipipe.org) instead
+**Note:** A bit of name change is taking place. This repositofy will be used for documenting the general "framework-less" flow-based programming inspired pattern elaborated in [this post on GopherAcademy.org](http://blog.gopheracademy.com/composable-pipelines-pattern), while the scientific workflow library built using the pattern has moved to: [SciPipe](http://scipipe.org).
 
-## Glow - Simplistic library of (streaming) Go(lang) workflow components for scientific and bioinformatics workflows
-
-This is a work in progress, exploring how far we can get in writing in a "flow-based programming" style, completely without any frameworks,just using pure Go channels and go-routines, and just using a design pattern.
-
-For an in depth explanation of the ideas behind the library, see [this post on GopherAcademy.org](http://blog.gopheracademy.com/composable-pipelines-pattern).
+So in short, Glow is an (onboing) experiment exploring how far we can get in writing in a "flow-based programming" style, completely without any frameworks,just using pure Go channels and go-routines, and just using a design pattern.
 
 ### Example usage
 
